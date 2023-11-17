@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <style>
+    .table {
+      font-family: sans-serif;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .table th,
+    .table td {
+      padding: 0.75rem;
+      vertical-align: top;
+      border-top: 1.5px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .table th {
+      background-color: green;
+    }
+
+    .table td {
+      text-align: center;
+    }
+
+    .week-delay-high {
+      background-color: rgb(243, 106, 106);
+    }
+
+    .week-delay-low {
+      background-color: rgb(139, 226, 139);
+    }
+
+
+    .filter-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .filter-label {
+      padding: 0.5rem 1rem;
+      color: rgb(31, 18, 18);
+      font-family: sans-serif;
+    }
+
+    .filter-select {
+      width: 150px;
+      padding: 0.5rem 1rem;
+    }
+
+    
+    .filter-header{
+      font-family: sans-serif;
+      text-align: center;
+      margin: 0 auto;
+      width: 50%;
+    }
+
+    
+    .login-button {
+      padding: 0.5rem 1rem;
+      font-family: sans-serif;
+      background-color:darkorange;
+      color: rgb(37, 17, 17);
+      border: azure;
+      cursor: pointer;
+    }
+
+    .about-button {
+      padding: 0.5rem 1rem;
+      font-family: sans-serif;
+      background-color: darkorange;
+      color: rgb(26, 13, 13);
+      border: none;
+      cursor: pointer;
+      float: right;
+    }
+
+  </style>
+</head>
+
+
+<body>
+  <!--ALL PURPOSE BUTTONS -------------------------------------------------------------------->
+
+  <div class="Buttons">
+  <button class="login-button"><a href="admin/">Login</a></button>
+  <button class="login-button" type="submit"> Delay summary</button>
+  <button class="login-button" type="submit"> Generate report</button>
+  <button class="login-button"><a href="#gantt-chart-container">General Gantt</a></button>
+  <button class="login-button">KPI</button>
+  <!-- ABOUT ME ------------------------------------------------------------------------------>
+  <button class="about-button"><a href="about.html">About</a></button>
+
+  </div>
+
+  <!--FILTER SELECTION----------------------------------------------------------------------->
+
+  <div class="filter-header">
+    <h1>Projects Tracker</h1>
+  </div>
+  
+
+  <form method="get" action="{% url 'project_list' %}">
+    <label>Project Leader:</label>
+    <select name="leader">
+        <option value="all">All</option>
+        {% for project in projects %}
+            <option value="{{ project.leader.username }}">{{ project.leader.username }}</option>
+        {% endfor %}
+    </select>
+    <button class="login-button" type="submit">Apply Filters</button>
+  </form>
+
+  <p></p>
+ 
+  <!--TABLE DESIGN-->
+ <div class="container"> 
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Project ID</th>
+        <th scope="col">Project Title</th>
+        <th scope="col">Status</th>
+        <th scope="col">Project Leader</th>
+        <th scope="col">Lab</th>
+        <th scope="col">MAG</th>
+        <th scope="col">S Gate</th>
+        <th scope="col">R Gate</th>
+        <th scope="col">Actual R Gate</th>
+
+        <th scope="col">Next Gate</th>
+        <th scope="col">Next Gate Date</th>
+
+        <th scope="col">Delay %</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+    
+        {% for project in projects %}
+        <tr class="project-tracker-table"></tr>
+          <td><a href="{% url 'project_info' pk=project.id %}">{{ project.projectId }}</a></td>
+
+          <td>{{ project.name }}</td>
+          <td >{{ project.status }}</td>
+          <td>{{ project.leader.username }}</td>
+          <td>{{ project.lab }}</td>
+          <td>{{ project.mag }}</td>
+          <td>{{ project.sgate_date }}</td>
+          <td>{{ project.rgate_date }}</td>
+          <td>{{ project.actual_rgate_date }}</td>
+          <td>{{ project.nextgate}}</td>
+          <td>{{ project.nextgate_date}}</td>
+          <td >{{ project.week_delay }}</td>
+ 
+        
+        </td>
+        </tr>
+
+
+        {% endfor %}
+
+
+        
+      </tbody>
+  </table>
+
+    <!-- Gantt chart container -->
+    
+    <div id="gantt-chart-container">
+        <div id="gantt-chart" data-gantt-chart='{{ gantt_chart_json|safe }}'></div>
+    </div>
+</div>
+
+
+<!-- Include the Plotly library -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<!-- Add a script to render the Gantt chart -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var ganttChartJson = JSON.parse(document.getElementById('gantt-chart').dataset.ganttChart);
+        Plotly.newPlot('gantt-chart', ganttChartJson.data, ganttChartJson.layout);
+    });
+</script>
+
+
+</body>
+
+</html>
+
+

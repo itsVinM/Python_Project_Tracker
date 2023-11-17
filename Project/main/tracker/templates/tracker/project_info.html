@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+
+    .container {
+      display: flex;
+      justify-content: left;
+      align-items: flex-start; /* Align to the left */
+      margin: 20px;
+
+    }
+
+    .container_2 {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start; /* Align to the left */
+      margin: 20px;
+    }
+
+    .card {
+      width:30%;
+      background-color: lightgrey;
+      border: 1px solid #ddd;
+      padding: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 10px; /* Add margin between cards */
+    }
+
+    .card_2 {
+      width:20%;
+      background-color: lightgrey;
+      border: 1px solid #ddd;
+      padding: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px; /* Add margin between cards */
+    }
+
+    .card table {
+      width: 100%;
+    }
+
+    .card table th,
+    .card table td {
+      text-align: left;
+      padding: 10px;
+    
+    }
+
+
+    .card h5 {
+      margin-bottom: 10px;
+      color: green;
+      font-family: sans-serif;
+    }
+
+    .card p {
+      margin: 0;
+    }
+
+    
+    .card_2 table th,
+    .card_2 table td {
+      text-align: left;
+      padding: 10px;
+    }
+
+    .card_2 h5 {
+      margin-bottom: 10px;
+      color: green;
+      font-family: sans-serif;
+    }
+
+    .card_2 p {
+      margin: 0;
+    }
+
+    .header {
+      font-family: sans-serif;
+      text-align: center;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .header-deck {
+      font-family: sans-serif;
+      text-align: left;
+      margin-bottom: 2px;
+      width: 60%;
+      color: rgb(128, 30, 0);
+    }
+    
+    .login-button {
+      padding: 0.5rem 1rem;
+      font-family: sans-serif;
+      background-color:darkorange;
+      color:whitesmoke;
+      border: azure;
+      cursor: pointer;
+    }
+
+    #gantt-chart-container {
+      width: 60%;
+      background-color: lightgrey;
+      border: 1px solid #ddd;
+      padding: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <h1>Project details</h1>
+  </div>
+
+  <div class="Buttons">
+  <button class="login-button">Download Info</button>
+  <button class="login-button"> Back</button>
+
+  </div>
+
+  <div class="container">
+
+    <div class="card">
+      
+      <table>
+        <tr>
+          <th class="header-deck">General information</th>
+        </tr>
+
+        <tr>
+          <th>Project Title </th>
+          <td>{{ project.name }}</td>
+        </tr>
+        
+        <tr>
+          <th>Project ID</th>
+          <td>{{ project.projectId }}</td>
+        </tr>
+        
+        <tr>
+          <th>Project Leader</th>
+          <td>{{ project.leader.username }}</td>
+        </tr>
+        
+        <tr>
+          <th>Support Engineer</th>
+          <td>{{ project.support }}</td>
+        </tr>
+        
+        <tr>
+          <th>Test Engineer</th>
+          <td>{{ project.testEng }}</td>
+        </tr>
+
+        <tr>
+          <th>Quality Engineer</th>
+          <td>{{ project.qualityEng}}</td>
+        </tr>
+
+        <tr>
+          <th>Measurement Method</th>
+          <td>{{ project.measurement_method }}</td>
+        </tr>
+        <tr>
+          <th>Reason</th>
+          <td>{{ project.reason }}</td>
+        </tr>
+        <tr>
+          <th>Purpose</th>
+          <td>{{ project.purpose }}</td>
+        </tr>
+        <tr>
+          <th>Comment</th>
+          <td>{{ project.comment }}</td>
+        </tr>
+        <tr>
+          <th>Level</th>
+          <td>{{ project.level }}</td>
+        </tr>
+        <tr>
+          <th>CapEx Reference</th>
+          <td>{{ project.CapEx_Ref }}</td>
+        </tr>
+        <tr>
+          <th>Last Update </th>
+          <td>{{ project.lastUpdate }}</td>
+        </tr>
+
+        <tr>
+          <th>Curent Forecast Update </th>
+          <td>{{ project.currentForecast}}</td>
+        </tr>
+      </table>
+
+    </div>
+
+    <div class="card_2">
+      
+      <table>
+        <tr>
+          <th class="header-deck">Gate Base</th>
+        </tr>
+        <tr>
+          <th>S Gate</th>
+          <td>{{ project.sgate_date }}</td>
+        </tr>
+        <tr>
+          <th>A Gate</th>
+          <td>{{ project.agate_date }}</td>
+
+        </tr>
+        <tr>
+          <th>V Gate</th>
+          <td>{{ project.vgate_date }}</td>
+        </tr>
+        <tr>
+          <th>R Gate</th>
+          <td>{{ project.rgate_date}}</td>
+        </tr>
+      </table>
+  
+      <table>
+        <tr>
+          <th class="header-deck">Gate Update</th>
+        </tr>
+        <tr>
+
+        <tr>
+          <th>Actual S Gate</th>
+          <td contenteditable="true">{{ project.actual_sgate_date }}</td>
+        </tr>
+
+        <tr>
+          <th>Actual A Gate</th>
+          <td contenteditable="true">{{ project.actual_agate_date }}</td>
+        </tr>
+
+        <tr>
+          <th>Actual V Gate</th>
+          <td contenteditable="true">{{ project.actual_vgate_date }}</td>
+        </tr>
+
+        <tr>
+          <th>Actual R Gate</th>
+          <td contenteditable="true">{{ project.actual_rgate_date }}</td>
+        </tr>
+        
+      </table>  
+    </div>
+  </div>
+  <div class="gantt-chart-container"> 
+        <!-- Gantt chart container -->
+        <div id="gantt-chart" data-gantt-chart='{{ gantt_chart_json|safe }}'></div>
+  </div>
+      
+      <!-- Include the Plotly library -->
+      <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+      
+      <!-- Add scripts to render each Gantt chart -->
+      <script>
+          document.addEventListener('DOMContentLoaded', function () {
+              var ganttChartJson = JSON.parse(document.getElementById('gantt-chart').dataset.ganttChart);
+              Plotly.newPlot('gantt-chart', ganttChartJson.data, ganttChartJson.layout);
+         });
+      </script>
+      
+      <style>
+          /* Add styles for the two-column layout */
+          .row {
+              display: flex;
+          }
+      
+          .column {
+              flex: 50%;
+              padding: 10px;
+          }
+      </style>
+</body>
+
+</html>
