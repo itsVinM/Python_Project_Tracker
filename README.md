@@ -1,4 +1,4 @@
-# Python_Project_Tracker
+# Python_Project_Tracker :: CURD
 
 ### Purpose
 I wanted to design a web version of the Microsoft Project and practice project management tasks.
