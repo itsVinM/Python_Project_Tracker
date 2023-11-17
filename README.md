@@ -12,11 +12,15 @@ I wanted to design a web version of the Microsoft Project and practice project m
 
 # Project detail
 Main Page of the tracker 
-![image](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/008d895d-90f1-4f23-abb7-eba671be351e)
+![image](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/ae7668a1-e04f-414e-9c6c-12e48e92b798)
+
 
 Project detail
 ![image](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/ca5d00d4-3b46-43e1-b9dd-140efe004699)
 
 ![image](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/102e74a5-8d9e-4384-b805-440a2c7b3d04)
+
+Admin view
+![image](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/76431c0f-a2f6-446e-896c-85b7f84df0c0)
 
 
