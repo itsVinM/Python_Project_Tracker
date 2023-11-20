@@ -1,7 +1,9 @@
-# Python_Project_Tracker
+# Python_Project_Tracker :: CURD
 
 ### Purpose
 I wanted to design a web version of the Microsoft Project and practice project management tasks.
+
+As source of inspiration -> https://levelup.gitconnected.com/getting-started-with-django-e6b444014f86 and all connected guides
 #### 🛠️Tools used :  
 
 <img src="https://github.com/devicons/devicon/blob/master/icons/python/python-original-wordmark.svg" title="Python" alt="Python" width="40" height="40"/>&nbsp;
