@@ -32,37 +32,6 @@ def project_tracker(request):
 
     return render(request, 'tracker/project_tracker.html', context)
 
-    
-def project_info(request, pk):
-    project = get_object_or_404(ProjectTracker, id=pk)
-
-    # Assuming 'pk' is the project ID
-    tasks = ProjectTracker.objects.filter(id=pk)
-
-    data_rows = []
-
-    for task in tasks:
-       
-        data_rows.append({'Task': task.projectId,
-                          'Start': task.actual_sgate_date,
-                          'Finish': task.actual_agate_date,
-                          'Event': 'S Gate'})
-        
-        data_rows.append({'Task': task.projectId,
-                          'Start': task.actual_agate_date,
-                          'Finish': task.actual_agate_date,
-                          'Event': 'A Gate'})
-        
-        data_rows.append({'Task': task.projectId,
-                          'Start': task.actual_vgate_date,
-                          'Finish': task.actual_vgate_date,
-                          'Event': 'V Gate'})
-        
-        data_rows.append({'Task': task.projectId,
-                          'Start': task.rgate_date,
-                          'Finish': task.actual_rgate_date,
-                          'Event': 'R Gate'})
-
 
 def project_info(request, pk):
     project = get_object_or_404(ProjectTracker, id=pk)
