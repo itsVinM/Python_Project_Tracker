@@ -127,18 +127,6 @@ def about_view(request):
 
 
 
-def project_list(request):
-    leader_filter = request.GET.get('leader', 'all')
-
-    if leader_filter == 'all':
-        projects = ProjectTracker.objects.all()
-    else:
-        projects = ProjectTracker.objects.filter(leader__username=leader_filter)
-
-    return render(request, 'project_tracker.html', {'projects': projects})
-
-
-
 def overall_gantt_chart(request):
     # Assuming 'projects' is a queryset of all projects
     projects = ProjectTracker.objects.all()
@@ -146,8 +134,8 @@ def overall_gantt_chart(request):
     # Create a Pandas DataFrame for the overall Gantt chart
     data = pd.DataFrame({
         'Task': [project.name for project in projects],
-        'Start': [project.start_date for project in projects],
-        'Finish': [project.actual_date for project in projects]
+        'Start': [project.sgate_date for project in projects],
+        'Finish': [project.actual_rgate_date for project in projects]
     })
 
     # Create the overall Gantt chart using Plotly
@@ -170,4 +158,4 @@ def overall_gantt_chart(request):
         'overall_gantt_chart_json': overall_gantt_chart_json,
     }
 
-    return render(request, 'tracker/gantt_chart.html', context)
+    return render(request, 'tracker/gantt.html', context)

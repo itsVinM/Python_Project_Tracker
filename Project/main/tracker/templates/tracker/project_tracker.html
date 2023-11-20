@@ -1,8 +1,20 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
 <head>
+  
+  <!-- Include jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Include DataTables.net CSS and JS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.8/datatables.min.css"/>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.8/datatables.min.js"></script>
 
   <style>
+    .dataTables_wrapper {
+            margin-top: 20px; /* Adjust as needed */
+        }
+
     .table {
       font-family: sans-serif;
     }
@@ -28,30 +40,12 @@
     }
 
     .week-delay-high {
-      background-color: rgb(243, 106, 106);
+    background-color: darkred; 
+    color: white; 
     }
 
     .week-delay-low {
       background-color: rgb(139, 226, 139);
-    }
-
-
-    .filter-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-
-    .filter-label {
-      padding: 0.5rem 1rem;
-      color: rgb(31, 18, 18);
-      font-family: sans-serif;
-    }
-
-    .filter-select {
-      width: 150px;
-      padding: 0.5rem 1rem;
     }
 
     
@@ -82,114 +76,111 @@
       float: right;
     }
 
+
+    .Header {
+            padding: 1px; 
+            text-align: center;
+
+        }
+
+    .Header img {
+            max-width: 100%;
+            height: 100;
+            display: block; 
+            margin: 0 auto;
+            max-height: 80px;
+    }
+
   </style>
 </head>
 
 
 <body>
-  <!--ALL PURPOSE BUTTONS -------------------------------------------------------------------->
+  <!-- external datatables -->
+  <script src="https://cdn.datatables.net/v/dt/dt-1.13.8/datatables.min.js"></script>
 
+
+  <!--BUTTONS ------------------------------------------------------------------------------->
   <div class="Buttons">
-  <button class="login-button"><a href="admin/">Login</a></button>
-  <button class="login-button" type="submit"> Delay summary</button>
-  <button class="login-button" type="submit"> Generate report</button>
-  <button class="login-button"><a href="#gantt-chart-container">General Gantt</a></button>
-  <button class="login-button">KPI</button>
-  <!-- ABOUT ME ------------------------------------------------------------------------------>
-  <button class="about-button"><a href="about.html">About</a></button>
+    <button class="login-button"><a href="admin/">Login</a></button>
+    <button class="login-button"><a href="gantt.html/">General Gantt</a></button>
+    <button class="login-button">KPI</button>
+  <!-- ABOUT ME ----------------------------------------------------------------------------->
+    <button class="about-button"><a href="about.html">About</a></button>
 
   </div>
-
-  <!--FILTER SELECTION----------------------------------------------------------------------->
+  <!--Logo
+  <div class="Header">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Nexperia-logo.svg/2560px-Nexperia-logo.svg.png" alt="">
+  </div>-->
 
   <div class="filter-header">
     <h1>Projects Tracker</h1>
   </div>
   
-
-  <form method="get" action="{% url 'project_list' %}">
-    <label>Project Leader:</label>
-    <select name="leader">
-        <option value="all">All</option>
-        {% for project in projects %}
-            <option value="{{ project.leader.username }}">{{ project.leader.username }}</option>
-        {% endfor %}
-    </select>
-    <button class="login-button" type="submit">Apply Filters</button>
-  </form>
-
-  <p></p>
  
-  <!--TABLE DESIGN-->
- <div class="container"> 
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Project ID</th>
-        <th scope="col">Project Title</th>
-        <th scope="col">Status</th>
-        <th scope="col">Project Leader</th>
-        <th scope="col">Lab</th>
-        <th scope="col">MAG</th>
-        <th scope="col">S Gate</th>
-        <th scope="col">R Gate</th>
-        <th scope="col">Actual R Gate</th>
+    <!-- TABLE DESIGN -->
+    <div class="container">
+      <table id="projectTable" class="table table-striped">
+          <thead>
+              <tr>
+                  <th scope="col">Project ID</th>
+                  <th scope="col">Project Title</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Project Leader</th>
+                  <th scope="col">CapEx</th>
+                  <th scope="col">Lab</th>
+                  <th scope="col">MAG</th>
+                  <th scope="col">S Gate</th>
+                  <th scope="col">R Gate</th>
+                  <th scope="col">Actual R Gate</th>
+                  <th scope="col">Next Gate</th>
+                  <th scope="col">Next Gate Date</th>
+                  <th scope="col">Delay %</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for project in projects %}
+                  <tr class="project-tracker-table">
+                      <td><a href="{% url 'project_info' pk=project.id %}">{{ project.projectId }}</a></td>
+                      <td>{{ project.name }}</td>
+                      <td>{{ project.status }}</td>
+                      <td>{{ project.leader.username }}</td>
+                      <td>{{ project.CapEx_Ref}}</td>
+                      <td>{{ project.lab }}</td>
+                      <td>{{ project.mag }}</td>
+                      <td>{{ project.sgate_date }}</td>
+                      <td>{{ project.rgate_date }}</td>
+                      <td>{{ project.actual_rgate_date }}</td>
+                      <td>{{ project.nextgate}}</td>
+                      <td>{{ project.nextgate_date}}</td>
+                      <td {% if project.week_delay > 10 %}class="week-delay-high" {% else%}class="week-delay-low" {% endif %}>{{ project.week_delay }}%</td>
 
-        <th scope="col">Next Gate</th>
-        <th scope="col">Next Gate Date</th>
-
-        <th scope="col">Delay %</th>
-      </tr>
-    </thead>
-    
-    <tbody>
-    
-        {% for project in projects %}
-        <tr class="project-tracker-table"></tr>
-          <td><a href="{% url 'project_info' pk=project.id %}">{{ project.projectId }}</a></td>
-
-          <td>{{ project.name }}</td>
-          <td >{{ project.status }}</td>
-          <td>{{ project.leader.username }}</td>
-          <td>{{ project.lab }}</td>
-          <td>{{ project.mag }}</td>
-          <td>{{ project.sgate_date }}</td>
-          <td>{{ project.rgate_date }}</td>
-          <td>{{ project.actual_rgate_date }}</td>
-          <td>{{ project.nextgate}}</td>
-          <td>{{ project.nextgate_date}}</td>
-          <td >{{ project.week_delay }}</td>
- 
-        
-        </td>
-        </tr>
-
-
-        {% endfor %}
+                  </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+  </div>
 
 
-        
-      </tbody>
-  </table>
+  
 
-    <!-- Gantt chart container -->
-    
-    <div id="gantt-chart-container">
-        <div id="gantt-chart" data-gantt-chart='{{ gantt_chart_json|safe }}'></div>
-    </div>
+  <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          // Initialize DataTable
+          $('#projectTable').DataTable();
+      });
+  </script>
+
+
 </div>
 
-
-<!-- Include the Plotly library -->
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
-<!-- Add a script to render the Gantt chart -->
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var ganttChartJson = JSON.parse(document.getElementById('gantt-chart').dataset.ganttChart);
-        Plotly.newPlot('gantt-chart', ganttChartJson.data, ganttChartJson.layout);
-    });
-</script>
+  <!-- Initialize DataTable -->
+  <script>
+        $(document).ready(function () {
+            $('#projectTable').DataTable();
+        });
+  </script>
 
 
 </body>

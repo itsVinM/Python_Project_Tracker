@@ -97,7 +97,8 @@ class ProjectTracker(models.Model):
         total_time= ((self.rgate_date-self.sgate_date).days)/7
         week_delay =(delay/ total_time)*100 
 
-        return f"{week_delay:.2f}%"
+        #return f"{week_delay:.2f}%"
+        return round(week_delay, 2)
     
     GaN="GaN Program"
     All_Projects="Project"

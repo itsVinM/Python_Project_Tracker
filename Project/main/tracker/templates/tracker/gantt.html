@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style> 
+      
+      .login-button {
+        padding: 0.5rem 1rem;
+        font-family: sans-serif;
+        background-color:darkorange;
+        color: rgb(37, 17, 17);
+        border: azure;
+        cursor: pointer;
+      }
+  
+      .about-button {
+        padding: 0.5rem 1rem;
+        font-family: sans-serif;
+        background-color: darkorange;
+        color: rgb(26, 13, 13);
+        border: none;
+        cursor: pointer;
+        float: right;
+      }
+  
+  
+      .Header {
+              padding: 1px; 
+              text-align: center;
+  
+          }
+  
+      .Header img {
+              max-width: 100%;
+              height: 100;
+              display: block; 
+              margin: 0 auto;
+              max-height: 80px;
+      }
+
+      .filter-header{
+      font-family: sans-serif;
+      text-align: center;
+      margin: 0 auto;
+      width: 50%;
+    }
+  
+    </style>
+  </head>
+<body>
+
+
+
+<!--Buttons-->
+
+<div class="Buttons">
+    <button class="login-button"><a href="admin/">Login</a></button>
+    <button class="login-button"><a href="{% url 'project_tracker' %}">Back </a></button>
+  
+</div>
+
+<!--Logo
+<div class="Header">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Nexperia-logo.svg/2560px-Nexperia-logo.svg.png" alt="">
+</div>-->
+
+<div class="filter-header">
+  <h1>Gantt Charts</h1>
+</div>
+
+<!-- Include the Plotly library -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- Gantt chart container -->
+<div class="container" ></div>
+    <div id="gantt-chart-container">
+        <div id="gantt-chart" data-gantt-chart='{{ overall_gantt_chart_json|safe }}'></div>
+    </div>
+</div>
+
+
+  <!-- Add a script to render the Gantt chart -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var ganttChartJson = JSON.parse(document.getElementById('gantt-chart').dataset.ganttChart);
+        Plotly.newPlot('gantt-chart', ganttChartJson.data, ganttChartJson.layout);
+    });
+</script>
+
+</body>
+</html>

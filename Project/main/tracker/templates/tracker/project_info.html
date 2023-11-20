@@ -7,74 +7,65 @@
       font-family: sans-serif;
     }
 
-    .container {
-      display: flex;
-      justify-content: left;
-      align-items: flex-start; /* Align to the left */
-      margin: 20px;
-
+    .Header {
+      padding: 1px;
+      text-align: center;
     }
 
-    .container_2 {
+    .Header img {
+      max-width: 100%;
+      height: 100;
+      display: block;
+      margin: 0 auto;
+      max-height: 80px;
+    }
+
+    .container {
       display: flex;
-      justify-content: center;
-      align-items: flex-start; /* Align to the left */
+      justify-content: space-between;
+      align-items: flex-start;
       margin: 20px;
     }
 
     .card {
-      width:30%;
+      width: 48%;
       background-color: lightgrey;
       border: 1px solid #ddd;
       padding: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      margin-bottom: 10px; /* Add margin between cards */
+      margin-bottom: 10px;
     }
 
     .card_2 {
-      width:20%;
+      width: 48%;
       background-color: lightgrey;
       border: 1px solid #ddd;
       padding: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      margin-bottom: 30px; /* Add margin between cards */
+      margin-bottom: 10px;
     }
 
-    .card table {
+    .card table,
+    .card_2 table {
       width: 100%;
     }
 
     .card table th,
-    .card table td {
-      text-align: left;
-      padding: 10px;
-    
-    }
-
-
-    .card h5 {
-      margin-bottom: 10px;
-      color: green;
-      font-family: sans-serif;
-    }
-
-    .card p {
-      margin: 0;
-    }
-
-    
+    .card table td,
     .card_2 table th,
     .card_2 table td {
       text-align: left;
       padding: 10px;
     }
 
+    .card h5,
     .card_2 h5 {
       margin-bottom: 10px;
       color: green;
       font-family: sans-serif;
     }
 
+    .card p,
     .card_2 p {
       margin: 0;
     }
@@ -93,12 +84,12 @@
       width: 60%;
       color: rgb(128, 30, 0);
     }
-    
+
     .login-button {
       padding: 0.5rem 1rem;
       font-family: sans-serif;
-      background-color:darkorange;
-      color:whitesmoke;
+      background-color: darkorange;
+      color: whitesmoke;
       border: azure;
       cursor: pointer;
     }
@@ -115,45 +106,50 @@
 </head>
 
 <body>
+
+  <div class="Buttons">
+    <button class="login-button">Download Info</button>
+    <button class="login-button"><a href="{% url 'project_tracker' %}">Back </a></button>
+  </div>
+
+  <!--Logo
+  <div class="Header">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Nexperia-logo.svg/2560px-Nexperia-logo.svg.png"
+      alt="">
+  </div>-->
+
   <div class="header">
     <h1>Project details</h1>
   </div>
 
-  <div class="Buttons">
-  <button class="login-button">Download Info</button>
-  <button class="login-button"> Back</button>
-
-  </div>
-
   <div class="container">
-
     <div class="card">
-      
       <table>
         <tr>
-          <th class="header-deck">General information</th>
+          <th class="header-deck"><h2>General information</h2></th>
         </tr>
 
         <tr>
           <th>Project Title </th>
           <td>{{ project.name }}</td>
         </tr>
-        
+
         <tr>
           <th>Project ID</th>
           <td>{{ project.projectId }}</td>
         </tr>
-        
+
         <tr>
           <th>Project Leader</th>
           <td>{{ project.leader.username }}</td>
         </tr>
-        
+
         <tr>
           <th>Support Engineer</th>
           <td>{{ project.support }}</td>
         </tr>
-        
+
         <tr>
           <th>Test Engineer</th>
           <td>{{ project.testEng }}</td>
@@ -194,19 +190,27 @@
         </tr>
 
         <tr>
-          <th>Curent Forecast Update </th>
+          <th>Current Forecast Update </th>
           <td>{{ project.currentForecast}}</td>
         </tr>
       </table>
-
     </div>
 
     <div class="card_2">
-      
       <table>
         <tr>
-          <th class="header-deck">Gate Base</th>
+          <th class="header-deck"><h2>Gate Base</h2></th>
         </tr>
+
+        <tr>
+          <th>Next Gate</th>
+          <td>{{ project.nextgate}}</td>
+        </tr>
+        <tr>
+          <th>Next Gate Date</th>
+          <td>{{ project.nextgate_date}}</td>
+        </tr>
+
         <tr>
           <th>S Gate</th>
           <td>{{ project.sgate_date }}</td>
@@ -214,7 +218,6 @@
         <tr>
           <th>A Gate</th>
           <td>{{ project.agate_date }}</td>
-
         </tr>
         <tr>
           <th>V Gate</th>
@@ -225,63 +228,66 @@
           <td>{{ project.rgate_date}}</td>
         </tr>
       </table>
-  
-      <table>
-        <tr>
-          <th class="header-deck">Gate Update</th>
-        </tr>
-        <tr>
 
-        <tr>
-          <th>Actual S Gate</th>
-          <td contenteditable="true">{{ project.actual_sgate_date }}</td>
-        </tr>
+      <form method="post" action="{% url 'project_info' pk=project.id %}">
+        {% csrf_token %}
+        <table>
+          <tr>
+            <th class="header-deck"><h2>Gate Update</h2></th>
+          </tr>
 
-        <tr>
-          <th>Actual A Gate</th>
-          <td contenteditable="true">{{ project.actual_agate_date }}</td>
-        </tr>
+          <tr>
+            <th>Actual S Gate</th>
+            <td><input type="text" name="actual_sgate_date" value="{{ project.actual_sgate_date }}"></td>
+          </tr>
 
-        <tr>
-          <th>Actual V Gate</th>
-          <td contenteditable="true">{{ project.actual_vgate_date }}</td>
-        </tr>
+          <tr>
+            <th>Actual A Gate</th>
+            <td><input type="text" name="actual_agate_date" value="{{ project.actual_agate_date }}"></td>
+          </tr>
 
-        <tr>
-          <th>Actual R Gate</th>
-          <td contenteditable="true">{{ project.actual_rgate_date }}</td>
-        </tr>
-        
-      </table>  
+          <tr>
+            <th>Actual V Gate</th>
+            <td><input type="text" name="actual_vgate_date" value="{{ project.actual_vgate_date }}"></td>
+          </tr>
+
+          <tr>
+            <th>Actual R Gate</th>
+            <td><input type="text" name="actual_rgate_date" value="{{ project.actual_rgate_date }}"></td>
+          </tr>
+        </table>
+        <input class="login-button" type="submit" value="Save Changes">
+      </form>
     </div>
   </div>
-  <div class="gantt-chart-container"> 
-        <!-- Gantt chart container -->
-        <div id="gantt-chart" data-gantt-chart='{{ gantt_chart_json|safe }}'></div>
+
+  <div class="gantt-chart-container">
+    <!-- Gantt chart container -->
+    <div id="gantt-chart" data-gantt-chart='{{ gantt_chart_json|safe }}'></div>
   </div>
-      
-      <!-- Include the Plotly library -->
-      <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-      
-      <!-- Add scripts to render each Gantt chart -->
-      <script>
-          document.addEventListener('DOMContentLoaded', function () {
-              var ganttChartJson = JSON.parse(document.getElementById('gantt-chart').dataset.ganttChart);
-              Plotly.newPlot('gantt-chart', ganttChartJson.data, ganttChartJson.layout);
-         });
-      </script>
-      
-      <style>
-          /* Add styles for the two-column layout */
-          .row {
-              display: flex;
-          }
-      
-          .column {
-              flex: 50%;
-              padding: 10px;
-          }
-      </style>
+
+  <!-- Include the Plotly library -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <!-- Add scripts to render each Gantt chart -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var ganttChartJson = JSON.parse(document.getElementById('gantt-chart').dataset.ganttChart);
+      Plotly.newPlot('gantt-chart', ganttChartJson.data, ganttChartJson.layout);
+    });
+  </script>
+
+  <style>
+    /* Add styles for the two-column layout */
+    .row {
+      display: flex;
+    }
+
+    .column {
+      flex: 50%;
+      padding: 10px;
+    }
+  </style>
 </body>
 
 </html>
