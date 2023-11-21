@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+# Create your models here.
+
+
 class ProjectTracker(models.Model):
     #STATUS CHOICES
 
@@ -9,14 +12,14 @@ class ProjectTracker(models.Model):
     CANCELED="CANCELED"
     zero="STARTED"
     one="ON TIME"
-    two="DELAY"
+    two="SLIGHT DELAY"
     STATUS_CHOICES=[
         (COMPLETED, 'COMPLETED'), 
         (NOT_STARTED, 'NOT STARTED'), 
         (CANCELED, 'CANCELED'), 
         (zero, 'STARTED'), 
         (one, 'ON TIME'), 
-        (two, 'DELAY')
+        (two, 'SLIGHT DELAY')
     ]
 
     #LAB CHOICE
@@ -59,12 +62,10 @@ class ProjectTracker(models.Model):
         (Rgate, "R Gate")
     ]
 
-    
-    leader = models.ForeignKey(User, null=True,blank=True,on_delete=models.SET_NULL)
-
     projectId= models.CharField(max_length=50,null=True,blank=True)
     name = models.CharField(max_length=255)
     status = models.CharField(max_length=50, choices=STATUS_CHOICES,null=True,blank=True,default= NOT_STARTED)
+    leader = models.ForeignKey(User, null=True,blank=True,on_delete=models.SET_NULL)
     lab=models.CharField(max_length=50, choices=LAB_CHOICES,null=True,blank=True)
     mag=models.CharField(max_length=50,choices=MAG_CHOICES,null=True,blank=True)
 
@@ -108,8 +109,13 @@ class ProjectTracker(models.Model):
     purpose=models.TextField(null=True, blank=True)
     comment=models.TextField(null=True, blank=True)
     level=models.CharField(max_length=50,choices=LEVEL_CHOICES, null=True, blank=True)                    #add choices
-    CapEx_Ref=models.CharField(max_length=250,  default="$0")  
+    CapEx_Ref=models.CharField(max_length=250, null=True, blank=True)  
 
     support=models.CharField(max_length=100, null=True, blank=True)
     testEng=models.CharField(max_length=100, null=True, blank=True)
     qualityEng=models.CharField(max_length=100, null=True, blank=True)
+    lastUpdate=models.DateField(null=True, blank=True)
+    currentForecast=models.DateField(null=True, blank=True)
+    #Other gates
+
+

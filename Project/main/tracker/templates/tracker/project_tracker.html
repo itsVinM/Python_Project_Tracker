@@ -2,6 +2,8 @@
 
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- Include jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -32,20 +34,25 @@
     }
 
     .table th {
-      background-color: green;
+      background-color: darkgreen;
+      color: white;
+ 
     }
 
     .table td {
       text-align: center;
     }
 
+    .table tbody tr:nth-child(even) {
+    background-color: lightgray;
+    }
     .week-delay-high {
     background-color: darkred; 
     color: white; 
     }
 
     .week-delay-low {
-      background-color: rgb(139, 226, 139);
+      background-color: lightgreen;
     }
 
     
@@ -91,6 +98,16 @@
             max-height: 80px;
     }
 
+    .container {
+      width: 98%;
+      margin: 0 auto;
+    }
+  
+    body {
+      font-family: sans-serif;
+    }
+
+
   </style>
 </head>
 
@@ -104,18 +121,18 @@
   <div class="Buttons">
     <button class="login-button"><a href="admin/">Login</a></button>
     <button class="login-button"><a href="gantt.html/">General Gantt</a></button>
-    <button class="login-button">KPI</button>
+    <button class="login-button"><a href="kpi.html">KPI</a></button>
   <!-- ABOUT ME ----------------------------------------------------------------------------->
     <button class="about-button"><a href="about.html">About</a></button>
 
   </div>
-  <!--Logo
+  <!--Logo-->
   <div class="Header">
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Nexperia-logo.svg/2560px-Nexperia-logo.svg.png" alt="">
-  </div>-->
+  </div>
 
   <div class="filter-header">
-    <h1>Projects Tracker</h1>
+    <h1>Project Tracker</h1>
   </div>
   
  
@@ -128,7 +145,7 @@
                   <th scope="col">Project Title</th>
                   <th scope="col">Status</th>
                   <th scope="col">Project Leader</th>
-                  <th scope="col">CapEx</th>
+                  <th scope="col">CapEx $mln</th>
                   <th scope="col">Lab</th>
                   <th scope="col">MAG</th>
                   <th scope="col">S Gate</th>
@@ -139,12 +156,23 @@
                   <th scope="col">Delay %</th>
               </tr>
           </thead>
+
+          <!-- Set up the TABLE from the sql lite database
+          colour condition for week_delay and status           
+          -->
           <tbody>
               {% for project in projects %}
                   <tr class="project-tracker-table">
                       <td><a href="{% url 'project_info' pk=project.id %}">{{ project.projectId }}</a></td>
                       <td>{{ project.name }}</td>
-                      <td>{{ project.status }}</td>
+                      <td style="{% if project.status == 'COMPLETED' %} background-color: :white; {% endif %}
+                                {% if project.status == 'NOT STARTED' %} background-color: white; {% endif %}
+                                {% if project.status == 'CANCELED' %} background-color: white; {% endif %}
+                                {% if project.status == 'STARTED' %} background-color: orange; {% endif %}
+                                {% if project.status == 'ON TIME' %} background-color: lightgreen; {% endif %}
+                                {% if project.status == 'DELAY' %} background-color: darkred; color:white; {% endif %}">
+                        {{project.status}}
+                      </td>
                       <td>{{ project.leader.username }}</td>
                       <td>{{ project.CapEx_Ref}}</td>
                       <td>{{ project.lab }}</td>
@@ -182,6 +210,10 @@
         });
   </script>
 
+  
+<footer style="text-align: center;" >
+  <p>&copy; 2024 Project Tracker.</p>
+</footer>
 
 </body>
 

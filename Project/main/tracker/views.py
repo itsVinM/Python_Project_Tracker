@@ -7,6 +7,18 @@ import json, plotly
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import plotly.express as px
+from django.http import JsonResponse
+from .forms import EditGateForm
+from django.http import HttpResponseRedirect
+
+
+
+
+
+"""------------------------------------------------------------------------------------ 
+Initialize specific gantt and ProjectTracker
+---------------------------------------------------------------------------------------"""
+
 
 def project_tracker(request):
     projects = ProjectTracker.objects.all()
@@ -33,35 +45,9 @@ def project_tracker(request):
     return render(request, 'tracker/project_tracker.html', context)
 
     
-def project_info(request, pk):
-    project = get_object_or_404(ProjectTracker, id=pk)
-
-    # Assuming 'pk' is the project ID
-    tasks = ProjectTracker.objects.filter(id=pk)
-
-    data_rows = []
-
-    for task in tasks:
-       
-        data_rows.append({'Task': task.projectId,
-                          'Start': task.actual_sgate_date,
-                          'Finish': task.actual_agate_date,
-                          'Event': 'S Gate'})
-        
-        data_rows.append({'Task': task.projectId,
-                          'Start': task.actual_agate_date,
-                          'Finish': task.actual_agate_date,
-                          'Event': 'A Gate'})
-        
-        data_rows.append({'Task': task.projectId,
-                          'Start': task.actual_vgate_date,
-                          'Finish': task.actual_vgate_date,
-                          'Event': 'V Gate'})
-        
-        data_rows.append({'Task': task.projectId,
-                          'Start': task.rgate_date,
-                          'Finish': task.actual_rgate_date,
-                          'Event': 'R Gate'})
+"""------------------------------------------------------------------------------------ 
+Project info detail ->> All informations from admin + allows editing of actual dates
+---------------------------------------------------------------------------------------"""
 
 
 def project_info(request, pk):
@@ -75,57 +61,78 @@ def project_info(request, pk):
     for task in tasks:
         # Create unique 'Task' values for each event
         all_task=f'{task.projectId} - Overall'
-        s_gate_task = f'{task.projectId} - S Gate'
-        a_gate_task = f'{task.projectId} - A Gate'
-        v_gate_task = f'{task.projectId} - V Gate'
-        r_gate_task = f'{task.projectId} - R Gate'
+
 
         data_rows.append({'Task': all_task,
                           'Start': task.sgate_date,
                           'Finish': task.actual_rgate_date,
-                          'Event': 'Overall duration'})
+                          'Resource': 'Overall', 
+})
         
-        data_rows.append({'Task': s_gate_task,
+        data_rows.append({'Task': task.projectId,
                           'Start': task.sgate_date,
                           'Finish': task.actual_sgate_date,
-                          'Event': 'S Gate'})
+                          'Resource': 'S Gate'})
         
-        data_rows.append({'Task': a_gate_task,
+        data_rows.append({'Task': task.projectId,
                           'Start': task.agate_date,
                           'Finish': task.actual_agate_date,
-                          'Event': 'A Gate'})
+                          'Resource': 'A Gate'})
         
-        data_rows.append({'Task': v_gate_task,
+        data_rows.append({'Task': task.projectId,
                           'Start': task.vgate_date,
                           'Finish': task.actual_vgate_date,
-                          'Event': 'V Gate'})
+                          'Resource': 'V Gate'})
         
-        data_rows.append({'Task': r_gate_task,
+        data_rows.append({'Task': task.projectId,
                           'Start': task.rgate_date,
                           'Finish': task.actual_rgate_date,
-                          'Event': 'R Gate'})
+                          'Resource': 'R Gate'})
+        
+    colors = {
+    'Overall': 'rgb(255, 165, 0)',   # Strong Orange
+    'S Gate': 'rgb(220, 0, 0)',      # Red
+    'A Gate': 'rgb(0, 0, 255)',      # Blue
+    'V Gate': 'rgb(148, 0, 211)',    # Violet
+    'R Gate': 'rgb(0, 128, 0)'       # Dark Green
+}
 
     # Convert the list of dictionaries to a Pandas DataFrame
     data = pd.DataFrame(data_rows)
 
     # Create Gantt chart using Plotly
-    fig = ff.create_gantt(data, index_col='Task', show_colorbar=True, group_tasks=True)
+    fig = ff.create_gantt(data,colors=colors,  index_col='Resource', show_colorbar=True, group_tasks=True)
     fig.update_layout(title_text='Project Gantt Chart', xaxis_title='Timeline')
 
     # Convert the figure to JSON
     gantt_chart_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
+        
     context = {
         'project': project,
         'gantt_chart_json': gantt_chart_json,
     }
 
+
+
     return render(request, 'tracker/project_info.html', context)
+
+"""------------------------------------------------------------------------------------ 
+ABOUT SECTION VIEW
+---------------------------------------------------------------------------------------"""
 
 def about_view(request):
     return render(request, 'tracker/about.html')
 
+"""------------------------------------------------------------------------------------ 
+KPI section
+---------------------------------------------------------------------------------------"""
+def kpi_view(request):
+    return render(request, 'tracker/kpi.html')
 
+"""------------------------------------------------------------------------------------ 
+General Gantt chart
+---------------------------------------------------------------------------------------"""
 
 def overall_gantt_chart(request):
     # Assuming 'projects' is a queryset of all projects
@@ -159,3 +166,17 @@ def overall_gantt_chart(request):
     }
 
     return render(request, 'tracker/gantt.html', context)
+
+
+def edit_gate(request, pk):
+    project = get_object_or_404(ProjectTracker, pk=pk)
+
+    if request.method == 'POST':
+        form = EditGateForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('success_page')  # Redirect to a success page or update the same page
+    else:
+        form = EditGateForm(instance=project)
+
+    return render(request, 'edit_gate.html', {'form': form, 'project': project})

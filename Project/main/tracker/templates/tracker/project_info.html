@@ -28,19 +28,19 @@
     }
 
     .card {
-      width: 48%;
+      width: 38%;
       background-color: lightgrey;
       border: 1px solid #ddd;
-      padding: 10px;
+      padding: 1px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       margin-bottom: 10px;
     }
 
     .card_2 {
-      width: 48%;
+      width: 38%;
       background-color: lightgrey;
       border: 1px solid #ddd;
-      padding: 10px;
+      padding: 1px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       margin-bottom: 10px;
     }
@@ -94,30 +94,35 @@
       cursor: pointer;
     }
 
-    #gantt-chart-container {
+    .gantt-chart-container {
       width: 60%;
-      background-color: lightgrey;
-      border: 1px solid #ddd;
       padding: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      margin-bottom: 30px;
+      margin-bottom: 10px;
     }
+
+    .general {
+      width: 100%;
+      margin: 0 auto;
+    }
+
   </style>
 </head>
 
 <body>
-
-  <div class="Buttons">
-    <button class="login-button">Download Info</button>
+<div class="Buttons">
     <button class="login-button"><a href="{% url 'project_tracker' %}">Back </a></button>
-  </div>
+    <button class="login-button">Summary</button>
+</div>
 
-  <!--Logo
+
+<div class="general">
+  <!--Logo-->
   <div class="Header">
     <img
       src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Nexperia-logo.svg/2560px-Nexperia-logo.svg.png"
       alt="">
-  </div>-->
+  </div>
 
   <div class="header">
     <h1>Project details</h1>
@@ -181,18 +186,14 @@
           <td>{{ project.level }}</td>
         </tr>
         <tr>
-          <th>CapEx Reference</th>
+          <th>CapEx Reference $</th>
           <td>{{ project.CapEx_Ref }}</td>
         </tr>
+        <br>
         <tr>
-          <th>Last Update </th>
-          <td>{{ project.lastUpdate }}</td>
-        </tr>
-
-        <tr>
-          <th>Current Forecast Update </th>
-          <td>{{ project.currentForecast}}</td>
-        </tr>
+          <th>Delay S gate - R gate</th>
+          <td {% if project.week_delay > 10 %} style="color: darkred; font-weight: bold;" {% else %} style="color: green; font-weight: bold;" {% endif %}>{{ project.week_delay }}%</td>
+        </tr> 
       </table>
     </div>
 
@@ -229,45 +230,45 @@
         </tr>
       </table>
 
-      <form method="post" action="{% url 'project_info' pk=project.id %}">
-        {% csrf_token %}
+
         <table>
           <tr>
             <th class="header-deck"><h2>Gate Update</h2></th>
           </tr>
-
+      
           <tr>
             <th>Actual S Gate</th>
-            <td><input type="text" name="actual_sgate_date" value="{{ project.actual_sgate_date }}"></td>
+            <td>{{ project.actual_sgate_date }}</td>
           </tr>
-
+      
           <tr>
             <th>Actual A Gate</th>
-            <td><input type="text" name="actual_agate_date" value="{{ project.actual_agate_date }}"></td>
+            <td>{{ project.actual_agate_date }}</td>
           </tr>
-
+      
           <tr>
             <th>Actual V Gate</th>
-            <td><input type="text" name="actual_vgate_date" value="{{ project.actual_vgate_date }}"></td>
+            <td>{{project.actual_vgate_date }}</td>
           </tr>
-
+      
           <tr>
             <th>Actual R Gate</th>
-            <td><input type="text" name="actual_rgate_date" value="{{ project.actual_rgate_date }}"></td>
-          </tr>
-        </table>
-        <input class="login-button" type="submit" value="Save Changes">
-      </form>
+            <td>{{ project.actual_rgate_date }}</td>
+          </tr>          
+          </table>
     </div>
-  </div>
+  
 
   <div class="gantt-chart-container">
     <!-- Gantt chart container -->
     <div id="gantt-chart" data-gantt-chart='{{ gantt_chart_json|safe }}'></div>
   </div>
 
+</div>
+
   <!-- Include the Plotly library -->
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
 
   <!-- Add scripts to render each Gantt chart -->
   <script>
@@ -288,6 +289,14 @@
       padding: 10px;
     }
   </style>
+
+</div>
+
+<footer style="text-align: center;" >
+  <!-- Your footer content goes here -->
+  <p>&copy; 2024 Project Tracker.</p>
+</footer>
+
 </body>
 
 </html>
