@@ -14,13 +14,11 @@ As source of inspiration -> https://levelup.gitconnected.com/getting-started-wit
 
 # Project detail
 Main Page of the tracker 
-
+![image](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/7bca8aef-1bcd-4d92-ac22-1a5acc1fb77e)
+![image](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/b7c82b54-bdea-4d73-8b6b-a574be273761)
 
 Project detail
-![image](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/883ee5c5-3f64-4216-9067-4899ea02df48)
-
-![image](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/4a5c6a92-15b4-42cb-9de9-690f586e736c)
-
+![image](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/fc55d766-558d-486d-9335-4964c8b43a45)
 
 Admin view
 ![image](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/76431c0f-a2f6-446e-896c-85b7f84df0c0)
