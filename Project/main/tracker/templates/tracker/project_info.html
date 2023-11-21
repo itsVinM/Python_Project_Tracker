@@ -88,7 +88,7 @@
     .login-button {
       padding: 0.5rem 1rem;
       font-family: sans-serif;
-      background-color: darkorange;
+      background-color: green;
       color: whitesmoke;
       border: azure;
       cursor: pointer;
@@ -112,7 +112,6 @@
 <body>
 <div class="Buttons">
     <button class="login-button"><a href="{% url 'project_tracker' %}">Back </a></button>
-    <button class="login-button">Summary</button>
 </div>
 
 
@@ -156,6 +155,11 @@
         </tr>
 
         <tr>
+          <th>CapEx Reference $</th>
+          <td>{{ project.CapEx_Ref }}</td>
+        </tr>
+        
+        <tr>
           <th>Test Engineer</th>
           <td>{{ project.testEng }}</td>
         </tr>
@@ -166,6 +170,23 @@
         </tr>
 
         <tr>
+          <th>Champion</th>
+          <td>{{ project.champion}}</td>
+        </tr>
+
+        <tr>
+          <th>Responsible</th>
+          <td>{{ project.responsible}}</td>
+        </tr>
+
+      </table>
+
+
+      <table>
+        <tr>
+          <th class="header-deck"><h2>Method</h2></th>
+      </tr>
+        <tr>
           <th>Measurement Method</th>
           <td>{{ project.measurement_method }}</td>
         </tr>
@@ -174,7 +195,7 @@
           <td>{{ project.reason }}</td>
         </tr>
         <tr>
-          <th>Purpose</th>
+          <th>Purpose/Milestone</th>
           <td>{{ project.purpose }}</td>
         </tr>
         <tr>
@@ -186,14 +207,10 @@
           <td>{{ project.level }}</td>
         </tr>
         <tr>
-          <th>CapEx Reference $</th>
-          <td>{{ project.CapEx_Ref }}</td>
+          <th>Delivery plane</th>
+          <td>{{ project.deliveryPlan }}</td>
         </tr>
-        <br>
-        <tr>
-          <th>Delay S gate - R gate</th>
-          <td {% if project.week_delay > 10 %} style="color: darkred; font-weight: bold;" {% else %} style="color: green; font-weight: bold;" {% endif %}>{{ project.week_delay }}%</td>
-        </tr> 
+
       </table>
     </div>
 
@@ -254,7 +271,13 @@
           <tr>
             <th>Actual R Gate</th>
             <td>{{ project.actual_rgate_date }}</td>
-          </tr>          
+          </tr>     
+          
+          <tr>
+            <th>Delay S gate - R gate</th>
+            <td {% if project.week_delay > 10 %} style="color: darkred; font-weight: bold;" {% else %} style="color: green; font-weight: bold;" {% endif %}>{{ project.week_delay }}%</td>
+          </tr> 
+
           </table>
     </div>
   

@@ -32,7 +32,7 @@ def project_tracker(request):
 
     # Create Gantt chart using Plotly
     fig = ff.create_gantt(data, show_colorbar=True, index_col='Task', group_tasks=True)
-    fig.update_layout(title_text='Project Gantt Chart', xaxis_title='Timeline')
+    fig.update_layout(title_text='Project Gantt Chart', xaxis_title='Timeline', autosize=True)
 
     # Convert the figure to JSON
     gantt_chart_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
@@ -60,15 +60,10 @@ def project_info(request, pk):
 
     for task in tasks:
         # Create unique 'Task' values for each event
+        baseline_task=f'{task.projectId}-Latest Baseline'
+        forecast_task=f'{task.projectId}-Latest Forecast'
         all_task=f'{task.projectId} - Overall'
 
-
-        data_rows.append({'Task': all_task,
-                          'Start': task.sgate_date,
-                          'Finish': task.actual_rgate_date,
-                          'Resource': 'Overall', 
-})
-        
         data_rows.append({'Task': task.projectId,
                           'Start': task.sgate_date,
                           'Finish': task.actual_sgate_date,
@@ -88,21 +83,41 @@ def project_info(request, pk):
                           'Start': task.rgate_date,
                           'Finish': task.actual_rgate_date,
                           'Resource': 'R Gate'})
+
+        data_rows.append({'Task': all_task,
+                          'Start': task.sgate_date,
+                          'Finish': task.actual_rgate_date,
+                          'Resource': 'Overall'})
+        
+        data_rows.append({'Task': baseline_task,
+                          'Start': task.sgate_date,
+                          'Finish': task.latesBase_date,
+                          'Resource': 'Latest Baseline'})
+        
+        data_rows.append({'Task': forecast_task,
+                          'Start': task.sgate_date,
+                          'Finish': task.latesForecast_date,
+                          'Resource': 'Latest Forecast'})
+
         
     colors = {
-    'Overall': 'rgb(255, 165, 0)',   # Strong Orange
-    'S Gate': 'rgb(220, 0, 0)',      # Red
-    'A Gate': 'rgb(0, 0, 255)',      # Blue
-    'V Gate': 'rgb(148, 0, 211)',    # Violet
-    'R Gate': 'rgb(0, 128, 0)'       # Dark Green
-}
+        'Latest Baseline': 'rgb(255, 0, 0)',  # Red for Latest Baseline
+        'Latest Forecast': 'rgb(0, 0, 255)',  # Blue for Latest Forecast
+        'Overall': 'rgb(255, 165, 0)',        # Strong Orange
+        'S Gate': 'rgb(220, 0, 0)',            # Red
+        'A Gate': 'rgb(0, 0, 255)',            # Blue
+        'V Gate': 'rgb(148, 0, 211)',          # Violet
+        'R Gate': 'rgb(0, 128, 0)'             # Dark Green
+    }
+
 
     # Convert the list of dictionaries to a Pandas DataFrame
     data = pd.DataFrame(data_rows)
 
+
     # Create Gantt chart using Plotly
     fig = ff.create_gantt(data,colors=colors,  index_col='Resource', show_colorbar=True, group_tasks=True)
-    fig.update_layout(title_text='Project Gantt Chart', xaxis_title='Timeline')
+    fig.update_layout(title_text='Project Gantt Chart', xaxis_title='Timeline', autosize=True)
 
     # Convert the figure to JSON
     gantt_chart_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
@@ -154,8 +169,9 @@ def overall_gantt_chart(request):
     )
     
     fig.update_layout(
-        title_text='Overall Gantt Chart',
+        title_text='Gantt Chart',
         xaxis_title='Timeline',
+        autosize=True,
     )
 
     # Convert the figure to JSON
@@ -168,15 +184,3 @@ def overall_gantt_chart(request):
     return render(request, 'tracker/gantt.html', context)
 
 
-def edit_gate(request, pk):
-    project = get_object_or_404(ProjectTracker, pk=pk)
-
-    if request.method == 'POST':
-        form = EditGateForm(request.POST, instance=project)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('success_page')  # Redirect to a success page or update the same page
-    else:
-        form = EditGateForm(instance=project)
-
-    return render(request, 'edit_gate.html', {'form': form, 'project': project})

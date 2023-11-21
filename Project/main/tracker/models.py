@@ -2,8 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class ProjectTracker(models.Model):
-    #STATUS CHOICES
 
+    #-----------------------
+    # Choices 
+    #-----------------------   
+    #STATUS CHOICES
     COMPLETED="COMPLETED"
     NOT_STARTED="NOT STARTED"
     CANCELED="CANCELED"
@@ -59,21 +62,40 @@ class ProjectTracker(models.Model):
         (Rgate, "R Gate")
     ]
 
-    
+    GaN="GaN Program"
+    All_Projects="Project"
+    LEVEL_CHOICES=[(GaN,"GaN Program"), (All_Projects, "Project")]
+
+    EquipementDevelopment="Equipment Development"
+    EquipementOperation="Equipment Operation"
+    NonStarted="Not Started"
+
+    RESPONSIBLE_CHOICES=[(EquipementDevelopment, "Equipment Development"), (EquipementOperation,"Equipment Operation"), ( NonStarted,"Not Started")]
+    #-----------------------------------------------------------------------------------
+    # Parameters definitions
+    #------------------------------------------------------------------------------------
+     
     leader = models.ForeignKey(User, null=True,blank=True,on_delete=models.SET_NULL)
 
     projectId= models.CharField(max_length=50,null=True,blank=True)
     name = models.CharField(max_length=255)
     status = models.CharField(max_length=50, choices=STATUS_CHOICES,null=True,blank=True,default= NOT_STARTED)
-    lab=models.CharField(max_length=50, choices=LAB_CHOICES,null=True,blank=True)
-    mag=models.CharField(max_length=50,choices=MAG_CHOICES,null=True,blank=True)
+    
+    """ GATE DATES 
+    Note: Django saves the dates as strings so the final output will be MM. DD,YY (e.g., Nov. 21, 2023)
+    """
 
     # Main dates
+
+    latesBase_date=models.DateField(null=True, blank=True)
+    latesForecast_date=models.DateField(null=True, blank=True)
+
     sgate_date=models.DateField(null=True, blank=True)
     agate_date=models.DateField(null=True, blank=True)
     vgate_date=models.DateField(null=True, blank=True)
     rgate_date=models.DateField(null=True,blank=True)
 
+    # Actual gates ->> to be edited by user
     actual_sgate_date=models.DateField(null=True, blank=True)
     actual_agate_date=models.DateField(null=True, blank=True)
     actual_vgate_date=models.DateField(null=True, blank=True)
@@ -83,26 +105,8 @@ class ProjectTracker(models.Model):
     nextgate=models.CharField(max_length=50, choices=NEXTGATE_CHOICES,null=True,blank=True,default= Sgate)
     nextgate_date=models.DateField(null=True,blank=True)
 
-
-    def __str__(self):
-        return self.name
-
-    @property
-    def week_delay(self):
-        if self.actual_rgate_date is None or self.rgate_date is None or self.sgate_date is None:
-            return None
-
-        delay = ((self.actual_rgate_date - self.sgate_date).days-(self.rgate_date - self.sgate_date).days)/7
-        total_time= ((self.rgate_date-self.sgate_date).days)/7
-        week_delay =(delay/ total_time)*100 
-
-        #return f"{week_delay:.2f}%"
-        return round(week_delay, 2)
-    
-    GaN="GaN Program"
-    All_Projects="Project"
-    LEVEL_CHOICES=[(GaN,"GaN Program"), (All_Projects, "Project")]
-
+    lab=models.CharField(max_length=50, choices=LAB_CHOICES,null=True,blank=True)
+    mag=models.CharField(max_length=50,choices=MAG_CHOICES,null=True,blank=True)
     measurement_method=models.CharField(max_length=250, null=True, blank=True)
     reason=models.CharField(max_length=50,null=True,blank=True)
     purpose=models.TextField(null=True, blank=True)
@@ -113,3 +117,29 @@ class ProjectTracker(models.Model):
     support=models.CharField(max_length=100, null=True, blank=True)
     testEng=models.CharField(max_length=100, null=True, blank=True)
     qualityEng=models.CharField(max_length=100, null=True, blank=True)
+    champion=models.CharField(max_length=100, null=True, blank=True)
+    responsible=models.CharField(max_length=100, choices=RESPONSIBLE_CHOICES,null=True, blank=True)
+
+    deliveryPlan=models.CharField(max_length=100, null=True, blank=True)
+    def __str__(self):
+        return self.name
+
+    # WEEK DELAY ->> %= (actual R - Base R)/(Base R - Base S)
+    @property
+    def week_delay(self):
+        if self.actual_rgate_date is None or self.rgate_date is None or self.sgate_date is None:
+            return None
+
+        delay = ((self.actual_rgate_date - self.sgate_date).days-(self.rgate_date - self.sgate_date).days)/7
+        total_time= ((self.rgate_date-self.sgate_date).days)/7
+        week_delay =(delay/ total_time)*100 
+
+        return round(week_delay, 2)
+    
+
+#-----------------------
+# Further models
+#-----------------------     
+
+class DetailsKPI(models.Model):
+    leader = models.ForeignKey(User, null=True,blank=True,on_delete=models.SET_NULL)

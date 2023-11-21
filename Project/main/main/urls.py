@@ -7,7 +7,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('project_info/<int:pk>/', views.project_info, name='project_info'),
     path('about.html/', views.about_view, name='about'),
-    path('gantt.html/', views.overall_gantt_chart, name='gantt'),
-    path('kpi.html/', views.kpi_view, name='kpi'),
-   
+    path('gantt.html/', views.overall_gantt_chart, name='gantt'),  
 ]
