@@ -1,4 +1,4 @@
-# Python_Project_Tracker :: CURD
+# <p align="center" style="font-size: 24px;">Python Project Tracker</p>
 
 ### Purpose
 I wanted to design a web version of the Microsoft Project and practice project management tasks.
@@ -14,12 +14,14 @@ As source of inspiration -> https://levelup.gitconnected.com/getting-started-wit
 
 # Project detail
 Main Page of the tracker 
-![image](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/7bca8aef-1bcd-4d92-ac22-1a5acc1fb77e)
+![image](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/0fdea324-6ee2-4b40-9eba-76981eea8471)
 
-![image](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/b7c82b54-bdea-4d73-8b6b-a574be273761)
+![image](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/477785f4-9a5e-4f03-a621-73dd1ea35b5c)
+
+
 
 Project detail
-![image](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/fc55d766-558d-486d-9335-4964c8b43a45)
+![image](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/246bc054-3d5f-4bc8-9688-2a9261a12788)
 
 Admin view
 ![image](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/76431c0f-a2f6-446e-896c-85b7f84df0c0)
