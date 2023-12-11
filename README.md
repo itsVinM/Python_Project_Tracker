@@ -1,16 +1,7 @@
 # <p align="center" style="font-size: 24px;">Python Project Tracker</p>
 
 ### Purpose
-I wanted to design a web version of the Microsoft Project and practice project management tasks.
-
-As source of inspiration -> https://levelup.gitconnected.com/getting-started-with-django-e6b444014f86 and all connected guides
-#### 🛠️Tools used :  
-
-<img src="https://github.com/devicons/devicon/blob/master/icons/python/python-original-wordmark.svg" title="Python" alt="Python" width="40" height="40"/>&nbsp;
-<img src="https://www.openapp.ie/wp-content/uploads/2015/03/Django.png" title="django" alt="django" width="70" height="40"/>&nbsp;
-<img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Plotly-logo.png" title="Plotly" alt="Plotly" width="80" height="40"/>&nbsp;
-
-
+Simple project tracker in [![Django](https://img.shields.io/badge/Django-darkgreen.svg)](https://docs.djangoproject.com/en/stable/), and [![Plotly](https://img.shields.io/badge/Plotly-lightblue.svg)](https://plotly.com/python)
 
 # Project detail
 Main Page of the tracker 
