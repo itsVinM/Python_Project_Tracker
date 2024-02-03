@@ -1,19 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+{% include 'base.html' with gantt_button=False gen_button=True back_button=True %}
+
+<html lang="en" data-bs-theme="dark">
 
 <head>
     <style> 
-      
-      .login-button {
-        padding: 0.5rem 1rem;
-        font-family: sans-serif;
-        background-color:green;
-        color: white;
-        border: azure;
-        cursor: pointer;
+      body{
+        background-color: white;
       }
-  
-  
+    
       .Header {
               padding: 1px; 
               text-align: center;
@@ -42,17 +37,6 @@
 
 
 <!--Buttons-->
-
-<div class="Buttons">
-    <button class="login-button"><a href="{% url 'project_tracker' %}">Back </a></button>
-  
-</div>
-
-<!--Logo-->
-<div class="Header">
-  <img src="" alt="">
-</div>
-
 <div class="filter-header">
   <h1>Gantt Charts</h1>
 </div>

@@ -184,3 +184,6 @@ def overall_gantt_chart(request):
     return render(request, 'tracker/gantt.html', context)
 
 
+def toggle_theme(request, current_theme):
+    new_theme = 'dark' if current_theme == 'light' else 'light'
+    return render(request, 'index.html', {'theme': new_theme})

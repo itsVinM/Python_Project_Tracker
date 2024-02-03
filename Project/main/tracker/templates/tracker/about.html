@@ -1,51 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="en" data-bs-theme="dark">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
- 
-  .login-button {
-      padding: 0.5rem 1rem;
-      font-family: sans-serif;
-      background-color: darkorange;
-      color: whitesmoke;
-      border: azure;
-      cursor: pointer;
-    }
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <title>{% block title %}Project Tracker{% endblock %}</title>
 
-  .Header {
-            padding: 1px; 
-            text-align: center;
-
-        }
-
-    .Header img {
-            max-width: 100%;
-            height: 100;
-            display: block; 
-            margin: 0 auto;
-            max-height: 80px;
-    }
-  
-
-    body {
-      font-family: sans-serif;
-      background-color: #f4f4f4d0;
-      display: flex;
-      margin: 0;
-    }
-
-    .info-box {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 10px;
-      width: 100%;
-      text-align: center;
-    }
-  </style>
 </head>
 
 <!--Logo-->
@@ -54,15 +16,18 @@
 
 <body>
 
-  <div class="info-box">
-      <div class="Header">
-      <img src="" alt="">
-      </div>
-      <h3>Developed by Vincentiu Mocanu  in Manchester</h1>
-      <h3>Date: 20 November 2023</h3>
+  <div class="bg-lightgray dark:bg-gray-800 text-black dark:text-white">
+      <header class="bg-gray-900 text-white p-3">
+        <div class="container mx-auto">
+          <img src="" alt="">
+          </div>
+          <h3>Developed by Vincentiu Mocanu  in Manchester</h1>
+          <h3>Date: 20 November 2023</h3>
 
-      <p></p>
-      <h3>Tools used: Python, Django, Html, Css, javascript, C </h3>
+          <p></p>
+          <h3>Tools used: Python, Django, Html, Css, javascript, C </h3>
+          </div>
+      </header>
       <footer style="text-align: center;" >
         <p>&copy; 2024 Project Tracker.</p>
       </footer>
