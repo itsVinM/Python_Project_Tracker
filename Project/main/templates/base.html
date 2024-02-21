@@ -19,45 +19,7 @@
             cursor: pointer;
         }
 
-        .toggle-switch {
-            display: flex;
-            align-items: center;
-        }
 
-        .toggle-label {
-            margin-right: 0.5rem;
-        }
-
-        .toggle-input {
-            height: 0;
-            width: 0;
-            visibility: hidden;
-        }
-
-        .toggle-slider {
-            position: relative;
-            cursor: pointer;
-            height: 1.5rem;
-            width: 3rem;
-            background-color: #ccc;
-            border-radius: 1rem;
-        }
-
-        .toggle-slider:before {
-            content: "";
-            position: absolute;
-            height: 1.25rem;
-            width: 1.25rem;
-            left: 0.25rem;
-            bottom: 0.125rem;
-            background-color: white;
-            border-radius: 50%;
-            transition: 0.4s;
-        }
-
-        .toggle-input:checked + .toggle-slider:before {
-            transform: translateX(1.5rem);
-        }
     </style>
 </head>
 
@@ -83,11 +45,6 @@
                     <button class="project.button"><a href="project_tracker.html">Summary table></a></button>
                 {% endif %}
                 
-                <div class="toggle-switch">
-                    <input type="checkbox" id="themeSwitch" class="toggle-input" onchange="toggleTheme('{{ theme }}')">
-
-                    <label for="themeSwitch" class="toggle-slider"></label>
-                </div>
             </div>
         </div>
     </header>

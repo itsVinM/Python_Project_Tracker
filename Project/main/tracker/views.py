@@ -149,6 +149,11 @@ def overall_gantt_chart(request):
     # Assuming 'projects' is a queryset of all projects
     projects = ProjectTracker.objects.all()
 
+    # Filter projects based on request parameters (if any)
+    project_name = request.GET.get('project_name')
+    if project_name:
+        projects = projects.filter(name=project_name)
+
     # Create a Pandas DataFrame for the overall Gantt chart
     data = pd.DataFrame({
         'Task': [project.name for project in projects],
@@ -178,5 +183,3 @@ def overall_gantt_chart(request):
     }
 
     return render(request, 'tracker/gantt.html', context)
-
-
