@@ -70,12 +70,19 @@
                 {% if gen_button %}
                     <button class="gen-button"><a href="admin/">Login</a></button>
                 {% endif %}
+                {% if sign_up_button %}
+                    <button class="sign-button"><a href="sing_up.html">Sign Up</a></button>
+                {% endif %}
                 {% if gantt_button %}
                     <button class="gantt-button"><a href="gantt.html/">General Gantt</a></button>
                 {% endif %}
                 {% if back_button %}
                     <button class="back-button"><a href="{% url 'project_tracker' %}">Back </a></button>        
                 {% endif %}
+                {% if project %}
+                    <button class="project.button"><a href="project_tracker.html">Summary table></a></button>
+                {% endif %}
+                
                 <div class="toggle-switch">
                     <input type="checkbox" id="themeSwitch" class="toggle-input" onchange="toggleTheme('{{ theme }}')">
 

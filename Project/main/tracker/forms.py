@@ -1,14 +1,11 @@
 # forms.py
 from django import forms
-from .models import ProjectTracker
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
-class EditGateForm(forms.ModelForm):
+class SignUpForm(UserCreationForm):
+    email = forms.EmailField()
+
     class Meta:
-        model = ProjectTracker
-        fields = ['actual_sgate_date', 'actual_agate_date', 'actual_vgate_date', 'actual_rgate_date']
-        widgets = {
-            'actual_sgate_date': forms.DateInput(attrs={'type': 'date'}),
-            'actual_agate_date': forms.DateInput(attrs={'type': 'date'}),
-            'actual_vgate_date': forms.DateInput(attrs={'type': 'date'}),
-            'actual_rgate_date': forms.DateInput(attrs={'type': 'date'}),
-        }
+        model = User
+        fields = ('username', 'email', 'password')

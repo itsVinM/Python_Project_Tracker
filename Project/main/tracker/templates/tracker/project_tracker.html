@@ -95,14 +95,8 @@
                   <th scope="col">Project Title</th>
                   <th scope="col">Status</th>
                   <th scope="col">Project Leader</th>
-                  <th scope="col">CapEx $mln</th>
-                  <th scope="col">Lab</th>
-                  <th scope="col">MAG</th>
-                  <th scope="col">S Gate</th>
-                  <th scope="col">R Gate</th>
-                  <th scope="col">Actual R Gate</th>
-                  <th scope="col">Next Gate</th>
-                  <th scope="col">Next Gate Date</th>
+                  <th scope="col">Actual Deadline</th>
+
                   <th scope="col">Delay %</th>
               </tr>
           </thead>
@@ -124,14 +118,7 @@
                         {{project.status}}
                       </td>
                       <td>{{ project.leader.username }}</td>
-                      <td>{{ project.CapEx_Ref}}</td>
-                      <td>{{ project.lab }}</td>
-                      <td>{{ project.mag }}</td>
-                      <td>{{ project.sgate_date }}</td>
-                      <td>{{ project.rgate_date }}</td>
                       <td>{{ project.actual_rgate_date }}</td>
-                      <td>{{ project.nextgate}}</td>
-                      <td>{{ project.nextgate_date}}</td>
                       <td {% if project.week_delay > 10 %}class="week-delay-high" {% else%}class="week-delay-low" {% endif %}>{{ project.week_delay }}%</td>
 
                   </tr>

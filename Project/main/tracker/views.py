@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import ProjectTracker
 import plotly.figure_factory as ff
 from plotly.figure_factory import create_gantt
@@ -8,8 +8,8 @@ from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import plotly.express as px
 from django.http import JsonResponse
-from .forms import EditGateForm
 from django.http import HttpResponseRedirect
+from .forms import SignUpForm
 
 
 
