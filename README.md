@@ -2,7 +2,7 @@
 
 ### Purpose
 Simple project tracker with Gantt:
-- user can edit only its projects
+- user can edit only its projects |  user can be added by superuser
 - in-detail stats for the project (update with your preferences).
 
 might update in future
