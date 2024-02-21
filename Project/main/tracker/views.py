@@ -9,10 +9,6 @@ import plotly.graph_objects as go
 import plotly.express as px
 from django.http import JsonResponse
 from django.http import HttpResponseRedirect
-from .forms import SignUpForm
-
-
-
 
 
 """------------------------------------------------------------------------------------ 
@@ -184,6 +180,3 @@ def overall_gantt_chart(request):
     return render(request, 'tracker/gantt.html', context)
 
 
-def toggle_theme(request, current_theme):
-    new_theme = 'dark' if current_theme == 'light' else 'light'
-    return render(request, 'index.html', {'theme': new_theme})

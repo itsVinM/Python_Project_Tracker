@@ -91,22 +91,6 @@
             </div>
         </div>
     </header>
-    <!-- BUTTONS ------------------------------------------------------------------------------->
-
-    <div class="container mx-auto mt-4">
-        <!-- Page-specific content -->
-        {% block content %}{% endblock %}
-    </div>
-
-    <script>
-        function toggleTheme(currentTheme) {
-            console.log('Toggle function called');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            document.body.classList.remove(`${currentTheme}-theme`);
-            document.body.classList.add(`${newTheme}-theme`);
-            localStorage.setItem('theme', newTheme);
-        }
-    </script>
 </body>
 
 </html>
