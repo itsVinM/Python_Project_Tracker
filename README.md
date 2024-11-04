@@ -9,6 +9,7 @@ There is still a lot to add, improve, and learn here.
 <img src="https://automationpanda.com/wp-content/uploads/2017/09/django-logo-negative.png" title="Django" alt="Django" width="50" height="40"/>
 </p>
 ## Function example
+
 ![image](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/27698760-7722-46af-aec8-bafc0c360260)
 ![Screenshot from 2024-02-03 21-15-54](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/7b16529e-254c-4da9-9353-e6a214dfb500)
 ![Screenshot from 2024-02-03 21-16-06](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/1465ec21-415a-4302-9120-439ff7d1b36a)
