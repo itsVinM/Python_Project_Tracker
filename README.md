@@ -8,7 +8,8 @@ There is still a lot to add, improve, and learn here.
 <img src="https://github.com/devicons/devicon/blob/master/icons/python/python-original-wordmark.svg" title="Python" alt="Python" width="40" height="40"/>
 <img src="https://automationpanda.com/wp-content/uploads/2017/09/django-logo-negative.png" title="Django" alt="Django" width="50" height="40"/>
 </p>
-## Function example
+
+## Example
 
 ![image](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/27698760-7722-46af-aec8-bafc0c360260)
 ![Screenshot from 2024-02-03 21-15-54](https://github.com/itsVinM/Python_Project_Tracker/assets/85823292/7b16529e-254c-4da9-9353-e6a214dfb500)
