@@ -24,7 +24,7 @@ There is still a lot to add, improve, and learn here.
 3. Clone the repository using `git clone`:
 
    ```bash
-   git clone https://github.com/itsVinM/Powertrain-Case-Selection.git
+   git clone https://github.com/itsVinM/Python_Project_Tracker.git
    
 **Requirements**
 
